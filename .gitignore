@@ -1,0 +1,14 @@
+# ingnore binary copies
+tripass
+
+# macOS specific files
+.DS_Store
+
+# Editor configs
+.vscode/
+
+# IntelliJ / Webstorm
+*.iml
+*.ipr
+*.iws
+.idea/
