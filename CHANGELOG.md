@@ -1,3 +1,11 @@
+## version 0.3.0
+- commence work on cli flags parsing code
+- add tests to cli flags initial code
+- pull in new source code from dependency 'app_version' package
+- change randon number generator to use system generator instead
+- updated 'genpass.odin' random number procedures
+- clean up 'main.odin' and start use of cli flags procedures
+
 ## version 0.2.1
 - add '-strict-style' to 'build.sh' script
 - undo change to for arrays 'marks' and 'words' to be const - as incorrect for Odin usage
@@ -9,7 +17,7 @@
 - change 'MARKS' to use rune instead of int
 - include the dictionary of three letter words used in 'reference' directory
 
-## Verison 0.1.0
+## verison 0.1.0
 - add basic project structure
 - include 'app_version' package as git submodule
 - add three letter words and marks data for use in password generation

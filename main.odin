@@ -14,16 +14,32 @@ import "core:fmt"
 import "app_version"
 
 main :: proc() {
+
+	flags_map := make(map[string]flag)
+	defer delete(flags_map)
+	// create the command line flags needed for the application
+	add_flag(&flags_map, "version", "-v", "--version", "Show the applications version.", false)
+	add_flag(&flags_map, "help", "-h", "--help", "Display the the help output.", false)
+	parse_flags(&flags_map)
+	
+	fmt.println(flags_map)
+
 	fmt.println("Running 'tripass'...")
-	fmt.println("Number of 'marks':", len(marks))
-	fmt.println("Number of 'words':", len(words))
-	fmt.println("Max Number of 'words':", MAX_WORDS)
-	app_version.version_show()
-	if rnd_num, ok := rand_int_range(MAX_WORDS); ok {
+	rnd := create_rnd()
+	if rnd_num, ok := rand_int_range(MAX_WORDS, rnd); ok {
 		fmt.println("\nRandom number is: ", rnd_num)
 		fmt.println("Random word is: ", words[rnd_num])
 	}
-	fmt.println("First random word is: ", words[0])
-	fmt.println("Last random word is: ", words[1311])
+}
+
+
+version_output :: proc() {
+	app_version.version_show()
+}
+
+help_output :: proc() {
+	fmt.println("Number of 'marks':", len(marks))
+	fmt.println("Number of 'words':", len(words))
+	fmt.println("Max Number of 'words':", MAX_WORDS)
 }
 
