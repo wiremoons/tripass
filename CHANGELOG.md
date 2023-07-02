@@ -1,3 +1,6 @@
+## version 0.3.1
+- disable 'odinfmt' in source 'triwords.odin' to keep large array formatting intact as is.
+
 ## version 0.3.0
 - commence work on cli flags parsing code
 - add tests to cli flags initial code

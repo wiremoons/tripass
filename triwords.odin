@@ -21,6 +21,7 @@ marks := [?]rune{'#', '.', ';', '@', '%', ':', '!', '>', '-', '<'}
 
 // Each string in the array contains a three letter english word used
 // to generate a password string.
+//odinfmt: disable
 words := [?]string{
     "aah", "aal", "aas", "aba", "abb", "abo", "abs", "aby", "ace", "ach", "act",
     "add", "ado", "ads", "adz", "aff", "aft", "aga", "age", "ago", "ags", "aha",
@@ -142,19 +143,24 @@ words := [?]string{
     "yup", "yus", "zag", "zap", "zas", "zax", "zea", "zed", "zee", "zek", "zel",
     "zep", "zex", "zho", "zig", "zin", "zip", "zit", "ziz", "zoa", "zol", "zoo",
     "zos", "zuz", "zzz"}
+//odinfmt: enable
 
 @(test)
-validate_sizes :: proc (t: ^testing.T) {
-    assert(MAX_WORDS == len(words) - 1)
-    assert(MAX_WORDS == 1311, "'words' array size has changed and no longer matches expected length.")
-    assert(MAX_MARKS == len(marks) - 1)
-    assert(MAX_MARKS == 9, "'marks' array size has changed and no longer matches expected length.")
+validate_sizes :: proc(t: ^testing.T) {
+	assert(MAX_WORDS == len(words) - 1)
+	assert(
+		MAX_WORDS == 1311,
+		"'words' array size has changed and no longer matches expected length.",
+	)
+	assert(MAX_MARKS == len(marks) - 1)
+	assert(MAX_MARKS == 9, "'marks' array size has changed and no longer matches expected length.")
 }
 
 @(test)
-validate_array_entries :: proc (t: ^testing.T) {
-    assert(words[0] == "aah", "First entry in array 'words' no matching - expected 'aah'")
-    assert(words[MAX_WORDS] == "zzz", "Last entry in array 'words' no matching - expected 'zzz'")
-    assert(marks[0] == '#', "First entry in array 'marks' no matching - expected '#'")
-    assert(marks[MAX_MARKS] == '<', "Last entry in array 'marks' no matching - expected '<'")
+validate_array_entries :: proc(t: ^testing.T) {
+	assert(words[0] == "aah", "First entry in array 'words' no matching - expected 'aah'")
+	assert(words[MAX_WORDS] == "zzz", "Last entry in array 'words' no matching - expected 'zzz'")
+	assert(marks[0] == '#', "First entry in array 'marks' no matching - expected '#'")
+	assert(marks[MAX_MARKS] == '<', "Last entry in array 'marks' no matching - expected '<'")
 }
+
