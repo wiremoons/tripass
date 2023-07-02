@@ -12,3 +12,9 @@ tripass
 *.ipr
 *.iws
 .idea/
+
+# key files
+keys.*
+Keys.*
+key.*
+Key.*
