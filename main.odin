@@ -30,6 +30,7 @@ main :: proc() {
 		fmt.println("\nRandom number is: ", rnd_num)
 		fmt.println("Random word is: ", words[rnd_num])
 	}
+	version_output()
 }
 
 

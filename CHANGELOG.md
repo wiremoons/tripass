@@ -1,5 +1,7 @@
 ## version 0.3.1
-- disable 'odinfmt' in source 'triwords.odin' to keep large array formatting intact as is.
+- disable 'odinfmt' in source 'triwords.odin' to keep large array formatting intact as is
+- add basic clone and build info to README.md including 'submodule' info
+- add Windows support with 'build.bat' file
 
 ## version 0.3.0
 - commence work on cli flags parsing code
