@@ -1,5 +1,6 @@
 # ingnore binary copies
 tripass
+tripass.exe
 
 # macOS specific files
 .DS_Store
