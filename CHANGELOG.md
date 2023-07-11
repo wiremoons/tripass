@@ -1,3 +1,8 @@
+## version 0.3.2
+- rename Windows batch file to: 'win-build.bat'
+- add '.gitattibutes' file to manage 'CRLF' for Windows files
+- simplify the duplictae entries in '.gitignore'
+
 ## version 0.3.1
 - disable 'odinfmt' in source 'triwords.odin' to keep large array formatting intact as is
 - add basic clone and build info to README.md including 'submodule' info

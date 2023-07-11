@@ -15,7 +15,5 @@ tripass.exe
 .idea/
 
 # key files
-keys.*
-Keys.*
-key.*
-Key.*
+[Kk]eys.*
+[Kk]ey.*
