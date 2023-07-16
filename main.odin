@@ -14,14 +14,15 @@ import "core:fmt"
 import "app_version"
 
 main :: proc() {
-
+	// create a new `map` to store the possible application command line flags
 	flags_map := make(map[string]flag)
 	defer delete(flags_map)
-	// create the command line flags needed for the application
+	// create each command line flags needed for the application
 	add_flag(&flags_map, "version", "-v", "--version", "Show the applications version.", false)
 	add_flag(&flags_map, "help", "-h", "--help", "Display the the help output.", false)
 	parse_flags(&flags_map)
 	
+	fmt.println("CLI flags map contains:\n")
 	fmt.println(flags_map)
 
 	fmt.println("Running 'tripass'...")
