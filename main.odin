@@ -18,12 +18,12 @@ main :: proc() {
 	flags_map := make(map[string]flag)
 	defer delete(flags_map)
 	// create each command line flags needed for the application
-	add_flag(&flags_map, "version", "-v", "--version", "Show the applications version.", false)
-	add_flag(&flags_map, "help", "-h", "--help", "Display the the help output.", false)
-	parse_flags(&flags_map)
+	// add_flag(&flags_map, "version", "-v", "--version", "Show the applications version.", false)
+	// add_flag(&flags_map, "help", "-h", "--help", "Display the the help output.", false)
+	// parse_flags(&flags_map)
 	
 	fmt.println("CLI flags map contains:\n")
-	fmt.println(flags_map)
+	// fmt.println(flags_map)
 
 	fmt.println("Running 'tripass'...")
 	rnd := create_rnd()

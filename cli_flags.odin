@@ -29,8 +29,8 @@ flag :: struct {
 	short:  string, // short cli flag such as '-v'
 	long:   string, // long cli flag such as '--version'
 	help:   string, // help string used for 'usage' proc
-	exists: bool, // set if flag is identified in cli args from use - initially 'false'
-	kind:   Kind, // Kind struct to define the cli flag type
+	exists: bool,   // set flag when detected in users cli args - initially 'false'
+	kind:   Kind,   // Kind struct to define the cli flag type
 }
 
 // check if a flag already exists in the map with the provided name
