@@ -31,6 +31,7 @@ main :: proc() {
 		fmt.println("\nRandom number is: ", rnd_num)
 		fmt.println("Random word is: ", words[rnd_num])
 	}
+	fmt.println("New password: ",build_password(3))
 	version_output()
 }
 

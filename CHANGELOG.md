@@ -1,3 +1,7 @@
+## version 0.3.4
+- remove `-show-timings` from `build.sh` to align with `win-build.bat`
+- add password generation function based on number of words required
+
 ## version 0.3.3
 - Fix spelling typos in `CHANGELOG.md`
 - Add addtional compile option `-o:speed` to both build scripts
