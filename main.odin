@@ -49,6 +49,7 @@ main :: proc() {
 	for key, value in tracking_allocator.allocation_map {
 		log.errorf("%v : Leaked %v bytes [%v]\n", value.location, value.size, key)
 	}
+	mem.tracking_allocator_clear(&tracking_allocator)
 }
 
 
