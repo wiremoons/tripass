@@ -18,7 +18,7 @@ import "core:log"
 main :: proc() {
 	// create a new context logger to output to the screen
 	context.logger = log.create_console_logger()
-
+	
 	// create a tracking allocator for memory used:
 	tracking_allocator: mem.Tracking_Allocator
 	mem.tracking_allocator_init(&tracking_allocator, context.allocator)
@@ -45,8 +45,9 @@ main :: proc() {
 	version_output()
 
 	// check using the tracking allocator if any memory was leaked?
+	fmt.println("\nDetected memory leaks are:")
 	for key, value in tracking_allocator.allocation_map {
-		log.errorf("%v: Leaked %v bytes [%v]\n", value.location, value.size, key)
+		log.errorf("%v : Leaked %v bytes [%v]\n", value.location, value.size, key)
 	}
 }
 
