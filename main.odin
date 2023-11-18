@@ -50,6 +50,8 @@ main :: proc() {
 		log.errorf("%v : Leaked %v bytes [%v]\n", value.location, value.size, key)
 	}
 	mem.tracking_allocator_clear(&tracking_allocator)
+	mem.tracking_allocator_destroy(&tracking_allocator)
+	//free_all()
 }
 
 

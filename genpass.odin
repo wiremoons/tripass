@@ -35,6 +35,7 @@ rand_int_range :: proc(max: int, rnd: ^rand.Rand) -> (rand_num: int, ok: bool) {
 build_password :: proc(number_words: int) -> string {
 	if number_words < 1 do return ""
 	rnd := create_rnd()
+	defer free(rnd)
 	sb := strings.builder_make()
 	defer strings.builder_destroy(&sb)
 	single_word: string
@@ -43,6 +44,7 @@ build_password :: proc(number_words: int) -> string {
 			single_word = words[rnd_num]
 			fmt.println("word: ", single_word)
 			strings.write_string(&sb, single_word)
+			defer delete(single_word)
 		}
 	}
 	return strings.clone(strings.to_string(sb))
