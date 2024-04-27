@@ -10,43 +10,49 @@
 
 package tripass
 
+import "core:fmt"
 import "core:math/rand"
 import "core:strings"
-import "core:fmt"
 
-
-// create and return a pointer to a new system random number generator 
-// to be used as a 'seed' parameter. 
-// NB: Will panic if there is no support for such a generator.
-create_rnd :: proc() -> ^rand.Rand {
-	rnd: rand.Rand
-	rand.init_as_system(&rnd)
-	return &rnd
-}
-
-// Provide a random integer number between zero (0) and the parameter 'max'.
-rand_int_range :: proc(max: int, rnd: ^rand.Rand) -> (rand_num: int, ok: bool) {
-	if max <= 0 || rnd == nil do return -1, false
-	return rand.int_max(max, rnd), true
-}
-
-// Generate a password constructed of `number_words` length generated
-// randomly from the array if three letter words.
-build_password :: proc(number_words: int) -> string {
-	if number_words < 1 do return ""
-	rnd := create_rnd()
-	defer free(rnd)
+// Generate a password string of length stated in paramter `number_of_words` or default to '3'.
+// Words are randomly generated from the applications global array 'words'.
+build_password_string :: proc(number_of_words: int = 3) -> string {
+	if number_of_words < 1 do return ""
 	sb := strings.builder_make()
 	defer strings.builder_destroy(&sb)
-	single_word: string
-	for _ in 1 ..= number_words {
-		if rnd_num, ok := rand_int_range(MAX_WORDS, rnd); ok {
-			single_word = words[rnd_num]
-			fmt.println("word: ", single_word)
-			strings.write_string(&sb, single_word)
-			defer delete(single_word)
-		}
+	for idx in 1 ..= number_of_words {
+		single_word: string = rand.choice(words[:])
+		defer delete(single_word)
+		fmt.printfln("word '%d' of '%d' is: '%s'", idx, number_of_words, single_word)
+		strings.write_string(&sb, single_word)
 	}
 	return strings.clone(strings.to_string(sb))
 }
 
+// Provide a random mark for inclussion withn the password string.
+// Marks are randomly generated from the applications global array 'marks'.
+select_mark :: proc(number_of_marks: int = 1) -> string {
+	if number_of_marks < 1 do return ""
+	sb := strings.builder_make()
+	defer strings.builder_destroy(&sb)
+	for idx in 1 ..= number_of_marks {
+		single_mark: rune = rand.choice(marks[:])
+		fmt.printfln("mark '%d' of '%d' is: '%v'", idx, number_of_marks, single_mark)
+		strings.write_rune(&sb, single_mark)
+	}
+	return strings.clone(strings.to_string(sb))
+}
+
+// Provide a random number for inclussion withn the password string.
+// Numbers are randomly generated from the range 0 - 99.
+select_random_number :: proc() -> string {
+	sb := strings.builder_make()
+	defer strings.builder_destroy(&sb)
+	random_number: i64 = rand.int63_max(100, nil)
+	// prefix the generated `randown_number` so is always two digits long
+	if random_number < 10 {
+		strings.write_string(&sb, "0")
+	}
+	strings.write_i64(&sb, random_number)
+	return strings.clone(strings.to_string(sb))
+}
