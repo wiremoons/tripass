@@ -148,10 +148,7 @@ words := [?]string{
 @(test)
 validate_sizes :: proc(t: ^testing.T) {
 	assert(MAX_WORDS == len(words) - 1)
-	assert(
-		MAX_WORDS == 1311,
-		"'words' array size has changed and no longer matches expected length.",
-	)
+	assert(MAX_WORDS == 1311, "'words' array size has changed and no longer matches expected length.")
 	assert(MAX_MARKS == len(marks) - 1)
 	assert(MAX_MARKS == 9, "'marks' array size has changed and no longer matches expected length.")
 }
@@ -163,4 +160,3 @@ validate_array_entries :: proc(t: ^testing.T) {
 	assert(marks[0] == '#', "First entry in array 'marks' no matching - expected '#'")
 	assert(marks[MAX_MARKS] == '<', "Last entry in array 'marks' no matching - expected '<'")
 }
-

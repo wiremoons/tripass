@@ -1,3 +1,8 @@
+## version 0.4.1
+
+- Add `Logger` functionality for `log.debugf()` output control.
+- Additional duplicate code to try to solve memory leaks.
+
 ## version 0.4.0
 
 - re-work and hugely simplify the password string generator by using builtin
