@@ -1,3 +1,8 @@
+## version 0.4.2
+
+- Add addtional copyright year of 2025 to the `LICENSE`..
+- Fix `Random_Generator` error regarding `nil` for context in `genpass.odin` in `select_random_number` proc.
+
 ## version 0.4.1
 
 - Add `Logger` functionality for `log.debugf()` output control.

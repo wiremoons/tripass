@@ -69,7 +69,7 @@ select_mark :: proc(number_of_marks: int = 1) -> string {
 select_random_number :: proc() -> string {
 	sb := strings.builder_make()
 	defer strings.builder_destroy(&sb)
-	random_number: i64 = rand.int63_max(100, nil)
+	random_number: i64 = rand.int63_max(100,)
 	log.debugf("random number is: '%d'", random_number)
 	// prefix the generated `randown_number` so is always two digits long
 	if random_number < 10 {
