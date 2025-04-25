@@ -1,6 +1,12 @@
+## version 0.5.0
+
+- Add `core:flags` from Odin core library to manage command line arguments usage.
+- Remove `cli_flags.odin` source code file as no longer needed.
+- Add `--debug` and `--version` command line flag usage.
+
 ## version 0.4.2
 
-- Add addtional copyright year of 2025 to the `LICENSE`..
+- Add addtional copyright year of 2025 to the `LICENSE`.
 - Fix `Random_Generator` error regarding `nil` for context in `genpass.odin` in `select_random_number` proc.
 
 ## version 0.4.1
