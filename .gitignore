@@ -1,4 +1,4 @@
-# ingnore binary copies
+# ignore binary copies
 tripass
 tripass.exe
 
@@ -17,3 +17,6 @@ tripass.exe
 # key files
 [Kk]eys.*
 [Kk]ey.*
+
+# ignore any debugging symbols files
+*.pdb
