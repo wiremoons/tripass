@@ -16,11 +16,11 @@ MAX_WORDS :: len(words) - 1
 MAX_MARKS :: len(marks) - 1
 
 // Each character (mark) is used as an additional random value to enhance 
-// the strength of the generated password.
+// the strength of the generated password. Total marks included: 10
 marks := [?]rune{'#', '.', ';', '@', '%', ':', '!', '>', '-', '<'}
 
 // Each string in the array contains a three letter english word used
-// to generate a password string.
+// to generate a password string. Total words included: 1311
 //odinfmt: disable
 words := [?]string{
     "aah", "aal", "aas", "aba", "abb", "abo", "abs", "aby", "ace", "ach", "act",
@@ -114,41 +114,41 @@ words := [?]string{
     "rip", "rit", "riz", "rob", "roc", "rod", "roe", "rok", "rom", "roo", "rot",
     "row", "rub", "ruc", "rud", "rue", "rug", "rum", "run", "rut", "rya", "rye",
     "sab", "sac", "sad", "sae", "sag", "sai", "sal", "sam", "san", "sap", "sar",
-    "sat", "sau", "sav", "saw", "sax", "say", "SAY", "saz", "sea", "sec", "sed",
-    "see", "seg", "sei", "sel", "sen", "ser", "set", "sew", "sex", "sey", "sez",
-    "sha", "she", "shh", "shy", "sib", "sic", "sif", "sik", "sim", "sin", "sip",
-    "sir", "sis", "sit", "six", "ska", "ski", "sky", "sly", "sma", "sny", "sob",
-    "soc", "sod", "sog", "soh", "sol", "som", "son", "sop", "sos", "sot", "sou",
-    "sov", "sow", "sox", "soy", "soz", "spa", "spy", "sri", "sty", "sub", "sud",
-    "sue", "sug", "sui", "suk", "sum", "sun", "sup", "suq", "sur", "sus", "swy",
-    "sye", "syn", "tab", "tad", "tae", "tag", "tai", "taj", "tak", "tam", "tan",
-    "tao", "tap", "tar", "tas", "tat", "tau", "tav", "taw", "tax", "tay", "tea",
-    "tec", "ted", "tee", "tef", "teg", "tel", "ten", "tes", "tet", "tew", "tex",
-    "the", "tho", "thy", "tic", "tid", "tie", "tig", "tik", "til", "tin", "tip",
-    "tis", "tit", "tix", "toc", "tod", "toe", "tog", "tom", "ton", "too", "top",
-    "tor", "tot", "tow", "toy", "try", "tsk", "tub", "tug", "tui", "tum", "tun",
-    "tup", "tut", "tux", "twa", "two", "twp", "tye", "tyg", "udo", "uds", "uey",
-    "ufo", "ugh", "ugs", "uke", "ule", "ulu", "umm", "ump", "ums", "umu", "uni",
-    "uns", "upo", "ups", "urb", "urd", "ure", "urn", "urp", "use", "uta", "ute",
-    "uts", "utu", "uva", "vac", "vae", "vag", "van", "var", "vas", "vat", "vau",
-    "vav", "vaw", "vee", "veg", "vet", "vex", "via", "vid", "vie", "vig", "vim",
-    "vin", "vis", "vly", "voe", "vol", "vor", "vow", "vox", "vug", "vum", "wab",
-    "wad", "wae", "wag", "wai", "wan", "wap", "war", "was", "wat", "waw", "wax",
-    "way", "web", "wed", "wee", "wem", "wen", "wet", "wex", "wey", "wha", "who",
-    "why", "wig", "win", "wis", "wit", "wiz", "woe", "wof", "wog", "wok", "won",
-    "woo", "wop", "wos", "wot", "wow", "wox", "wry", "wud", "wus", "wye", "wyn",
-    "xis", "yad", "yae", "yag", "yah", "yak", "yam", "yap", "yar", "yaw", "yay",
-    "yea", "yeh", "yen", "yep", "yes", "yet", "yew", "yex", "ygo", "yid", "yin",
-    "yip", "yob", "yod", "yok", "yom", "yon", "you", "yow", "yug", "yuk", "yum",
-    "yup", "yus", "zag", "zap", "zas", "zax", "zea", "zed", "zee", "zek", "zel",
-    "zep", "zex", "zho", "zig", "zin", "zip", "zit", "ziz", "zoa", "zol", "zoo",
-    "zos", "zuz", "zzz"}
+    "sat", "sau", "sav", "saw", "sax", "say", "saz", "sea", "sec", "sed", "see",
+    "seg", "sei", "sel", "sen", "ser", "set", "sew", "sex", "sey", "sez", "sha",
+    "she", "shh", "shy", "sib", "sic", "sif", "sik", "sim", "sin", "sip", "sir",
+    "sis", "sit", "six", "ska", "ski", "sky", "sly", "sma", "sny", "sob", "soc",
+    "sod", "sog", "soh", "sol", "som", "son", "sop", "sos", "sot", "sou", "sov",
+    "sow", "sox", "soy", "soz", "spa", "spy", "sri", "sty", "sub", "sud", "sue",
+    "sug", "sui", "suk", "sum", "sun", "sup", "suq", "sur", "sus", "swy", "sye",
+    "syn", "tab", "tad", "tae", "tag", "tai", "taj", "tak", "tam", "tan", "tao",
+    "tap", "tar", "tas", "tat", "tau", "tav", "taw", "tax", "tay", "tea", "tec",
+    "ted", "tee", "tef", "teg", "tel", "ten", "tes", "tet", "tew", "tex", "the",
+    "tho", "thy", "tic", "tid", "tie", "tig", "tik", "til", "tin", "tip", "tis",
+    "tit", "tix", "toc", "tod", "toe", "tog", "tom", "ton", "too", "top", "tor",
+    "tot", "tow", "toy", "try", "tsk", "tub", "tug", "tui", "tum", "tun", "tup",
+    "tut", "tux", "twa", "two", "twp", "tye", "tyg", "udo", "uds", "uey", "ufo",
+    "ugh", "ugs", "uke", "ule", "ulu", "umm", "ump", "ums", "umu", "uni", "uns",
+    "upo", "ups", "urb", "urd", "ure", "urn", "urp", "use", "uta", "ute", "uts",
+    "utu", "uva", "vac", "vae", "vag", "van", "var", "vas", "vat", "vau", "vav",
+    "vaw", "vee", "veg", "vet", "vex", "via", "vid", "vie", "vig", "vim", "vin",
+    "vis", "vly", "voe", "vol", "vor", "vow", "vox", "vug", "vum", "wab", "wad",
+    "wae", "wag", "wai", "wan", "wap", "war", "was", "wat", "waw", "wax", "way",
+    "web", "wed", "wee", "wem", "wen", "wet", "wex", "wey", "wha", "who", "why",
+    "wig", "win", "wis", "wit", "wiz", "woe", "wof", "wog", "wok", "won", "woo",
+    "wop", "wos", "wot", "wow", "wox", "wry", "wud", "wus", "wye", "wyn", "xis",
+    "yad", "yae", "yag", "yah", "yak", "yam", "yap", "yar", "yaw", "yay", "yea",
+    "yeh", "yen", "yep", "yes", "yet", "yew", "yex", "ygo", "yid", "yin", "yip",
+    "yob", "yod", "yok", "yom", "yon", "you", "yow", "yug", "yuk", "yum", "yup",
+    "yus", "zag", "zap", "zas", "zax", "zea", "zed", "zee", "zek", "zel", "zep",
+    "zex", "zho", "zig", "zin", "zip", "zit", "ziz", "zoa", "zol", "zoo", "zos",
+    "zuz", "zzz"}
 //odinfmt: enable
 
 @(test)
 validate_sizes :: proc(t: ^testing.T) {
 	assert(MAX_WORDS == len(words) - 1)
-	assert(MAX_WORDS == 1311, "'words' array size has changed and no longer matches expected length.")
+	assert(MAX_WORDS == 1310, "'words' array size has changed and no longer matches expected length.")
 	assert(MAX_MARKS == len(marks) - 1)
 	assert(MAX_MARKS == 9, "'marks' array size has changed and no longer matches expected length.")
 }

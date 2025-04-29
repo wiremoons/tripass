@@ -1,3 +1,11 @@
+## version 0.6.0
+
+- Add `--v` as short-form of `--version` command line flag option.
+- Use `context.temp_allocator` for temporary string builder proc usage in `genpass.odin`.
+- Remove duplicate word 'say' from array `words` in `triwords.odin` and update supporting tests.
+- Add a command line flag to optionally specify number of words to include in each generated password.
+- Fix string memory leaks in `main.odin` for generated password, random number, and mark.
+
 ## version 0.5.0
 
 - Add `core:flags` from Odin core library to manage command line arguments usage.

@@ -14,11 +14,11 @@ import "core:log"
 import "core:math/rand"
 import "core:strings"
 
-// // Generate a password string of length stated in paramter `number_of_words` or default to '3'.
+// // Generate a password string of length stated in parameter `number_of_words` or default to '3'.
 // // Words are randomly generated from the applications global array 'words'.
 build_password_string :: proc(number_of_words: int = 3) -> string {
 	if number_of_words < 1 do return ""
-	sb := strings.builder_make()
+	sb := strings.builder_make(context.temp_allocator)
 	defer strings.builder_destroy(&sb)
 	for idx in 1 ..= number_of_words {
 		single_word: string = rand.choice(words[:])
@@ -28,33 +28,12 @@ build_password_string :: proc(number_of_words: int = 3) -> string {
 	return strings.clone(strings.to_string(sb))
 }
 
-// Basic - no leaks working test version:
-// build_password_string :: proc(number_of_words: int = 3) -> string {
-// 	password: string = "mynewwordabc"
-// 	// return strings.clone(password) <-- same memory leak!
-// 	return password
-// }
-
-// // Generate a password string of length stated in paramter `number_of_words` or default to '3'.
-// // Words are randomly generated from the applications global array 'words'.
-// build_password_string :: proc(number_of_words: int = 3) -> string {
-// 	if number_of_words < 1 do return ""
-// 	sb: strings.Builder
-// 	defer strings.builder_destroy(&sb)
-// 	for idx in 1 ..= number_of_words {
-// 		single_word: string = rand.choice(words[:])
-// 		defer delete(single_word)
-// 		log.debugf("word '%d' of '%d' is: '%s'", idx, number_of_words, single_word)
-// 		strings.write_string(&sb, single_word)
-// 	}
-// 	return strings.to_string(sb)
-// }
 
 // Provide a random mark for inclussion withn the password string.
 // Marks are randomly generated from the applications global array 'marks'.
 select_mark :: proc(number_of_marks: int = 1) -> string {
 	if number_of_marks < 1 do return ""
-	sb := strings.builder_make()
+	sb := strings.builder_make(context.temp_allocator)
 	defer strings.builder_destroy(&sb)
 	for idx in 1 ..= number_of_marks {
 		single_mark: rune = rand.choice(marks[:])
