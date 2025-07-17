@@ -1,3 +1,7 @@
+## version 0.6.1
+
+- Update `app_version` sub-module to v0.2.4 for fixes to temp memory and cpu info call.
+
 ## version 0.6.0
 
 - Add `--v` as short-form of `--version` command line flag option.
