@@ -21,9 +21,9 @@ main :: proc() {
 
 	// set the context logger to output to the screen - only if: odin build -debug ...
 	when ODIN_DEBUG {
-		context.logger = log.create_console_logger(log.Level.Debug) 
+		context.logger = log.create_console_logger(log.Level.Debug)
 	}
-	
+
 	// create a tracking allocator for memory used:
 	tracking_allocator: mem.Tracking_Allocator
 	mem.tracking_allocator_init(&tracking_allocator, context.allocator)
@@ -32,6 +32,8 @@ main :: proc() {
 
 	// create each command line flag needed for the application using "core:flags"
 	Options :: struct {
+		info:    bool `usage:"Provide extended application information."`,
+		i:       bool `usage:"Provide extended application information [short-form flag]."`,
 		l:       bool `usage:"Provide lowercase passwords only. [default: titlecase]"`,
 		n:       int `usage:"Number of words included per suggested password. [default: 4]"`,
 		version: bool `usage:"Show the applications version."`,
@@ -58,27 +60,55 @@ main :: proc() {
 
 	// check if command line arg '--version' or '--v' was used
 	if opt.version || opt.v {
+		log.debugf("Outputting version information only...")
 		version_output()
+	} else if opt.info || opt.i {
+		log.debugf("Outputting version information only...")
+		version_output()
+		help_output(INCL_WORDS)
 	} else {
 		// default output for app below:
-		fmt.println("Running 'tripass'...")
-		help_output(INCL_WORDS)
-		new_password : string
+
+		// generate two different password strings from 'words'
+		password_one: string
 		if opt.l {
-			new_password = build_password_string_lowercase(INCL_WORDS)
+			password_one = build_password_string_lowercase(INCL_WORDS)
 		} else {
-			new_password = build_password_string_titlecase(INCL_WORDS)
+			password_one = build_password_string_titlecase(INCL_WORDS)
 		}
-		defer delete_string(new_password)
-		new_mark := select_mark(1)
-		defer delete_string(new_mark)
-		new_number := select_random_number()
-		defer delete_string(new_number)
+		defer delete_string(password_one)
+
+		password_short: string
+		if opt.l {
+			password_short = build_password_string_lowercase((INCL_WORDS / 2) + 1)
+		} else {
+			password_short = build_password_string_titlecase((INCL_WORDS / 2) + 1)
+		}
+		defer delete_string(password_short)
+
+		// generate two different random characters strings from 'marks'
+		new_mark_one := select_mark(1)
+		defer delete_string(new_mark_one)
+		new_mark_two := select_mark(1)
+		defer delete_string(new_mark_two)
+
+		// generate two random numbers
+		new_number_one := select_random_number()
+		defer delete_string(new_number_one)
+		new_number_two := select_random_number()
+		defer delete_string(new_number_two)
 
 		fmt.printfln("")
-		fmt.printfln("New password: '%s'", new_password)
-		fmt.printfln("New mark: '%v'", new_mark)
-		fmt.printfln("New random number: '%s'", new_number)
+		log.debugf("Long password: '%s'", password_one)
+		log.debugf("Short password: '%s'", password_short)
+		log.debugf("1st mark: '%v'", new_mark_one)
+		log.debugf("2nd mark: '%v'", new_mark_two)
+		log.debugf("1nd random number: '%s'", new_number_one)
+		log.debugf("2nd random number: '%s'", new_number_two)
+
+		fmt.printf("%s      ", password_one)
+		fmt.printf("%s%v%s      ", password_one, new_mark_one, new_number_one)
+		fmt.printfln("%s%v%s%v%s", new_number_one, new_mark_one, password_short, new_mark_two, new_number_two)
 	}
 
 	free_all(context.temp_allocator)
@@ -105,7 +135,20 @@ version_output :: proc() {
 }
 
 help_output :: proc(INCL_WORDS: int) {
+	fmt.println("")
+	fmt.println("This application is used to generate strong random passwords from a dictionary")
+	fmt.println("of three letter words. The generated passwords are offered in mixed or lowercase")
+	fmt.println("characters, optionally combined with marks (ie additional punctuation characters)")
+	fmt.println("and random numbers. The sources used randomly comprise of:")
+	fmt.println("")
 	fmt.println("Total number of 'marks':", len(marks))
 	fmt.println("Total number of 'words':", len(words))
 	fmt.println("Number of 'words' per suggested password:", INCL_WORDS)
+	fmt.println("")
+	fmt.println("To review the available command line options execute the application with:")
+	fmt.println("    -h   or   --help")
+	fmt.println("")
+	fmt.println("The source code and license are available here:")
+	fmt.println("    https://github.com/wiremoons/tripass")
+	fmt.println("")
 }

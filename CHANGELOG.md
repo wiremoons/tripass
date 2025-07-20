@@ -1,3 +1,12 @@
+## version 0.8.0
+- Add command line options `-i` and `--info`.
+- Add output to explain purpose of the application and display source password data summary.
+- When executed display three different new paswords for user to choose from.
+
+## version 0.7.1
+- Annotate arrays `marks` and `words` as `@rodata` to ensure they are readonly.
+- Change `ols.json` to include `enable_semantic_tokens: true` for syntax highlighting.
+
 ## version 0.7.0
 
 - Add proc to create titlecase words for inclusion in a generated password.
@@ -5,6 +14,7 @@
 - Rename proc `build_password_string` to `build_password_string_lowercase`.
 - Enable debug level logging output with compiled with `odin build -debug ...`.
 - Add `debug.sh` to assist with non 'release' builds.
+- Remove `--debug` hidden command line flag usage.
 - Add debug symbols sub-directory to `.gitignore` file.
 
 ## version 0.6.1
