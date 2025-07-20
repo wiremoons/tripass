@@ -20,3 +20,6 @@ tripass.exe
 
 # ignore any debugging symbols files
 *.pdb
+
+# debug symbols and data
+*.dSYM
