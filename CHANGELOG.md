@@ -1,3 +1,12 @@
+## version 0.7.0
+
+- Add proc to create titlecase words for inclusion in a generated password.
+- Ensure `context.temp_allocator` is also used for titlecase conversion call to avoid mem leak.
+- Rename proc `build_password_string` to `build_password_string_lowercase`.
+- Enable debug level logging output with compiled with `odin build -debug ...`.
+- Add `debug.sh` to assist with non 'release' builds.
+- Add debug symbols sub-directory to `.gitignore` file.
+
 ## version 0.6.1
 
 - Update `app_version` sub-module to v0.2.4 for fixes to temp memory and cpu info call.

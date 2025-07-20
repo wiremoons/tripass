@@ -14,14 +14,30 @@ import "core:log"
 import "core:math/rand"
 import "core:strings"
 
-// // Generate a password string of length stated in parameter `number_of_words` or default to '3'.
-// // Words are randomly generated from the applications global array 'words'.
-build_password_string :: proc(number_of_words: int = 3) -> string {
+// Generate a password string of length stated in parameter `number_of_words` or default to '3'.
+// Words are randomly generated from the applications global array 'words'.
+// Each word is left as stored in the array 'words' ( ie lowercase) .
+build_password_string_lowercase :: proc(number_of_words: int = 3) -> string {
 	if number_of_words < 1 do return ""
 	sb := strings.builder_make(context.temp_allocator)
 	defer strings.builder_destroy(&sb)
 	for idx in 1 ..= number_of_words {
 		single_word: string = rand.choice(words[:])
+		log.debugf("word '%d' of '%d' is: '%s'", idx, number_of_words, single_word)
+		strings.write_string(&sb, single_word)
+	}
+	return strings.clone(strings.to_string(sb))
+}
+
+// Generate a password string of length stated in parameter `number_of_words` or default to '3'.
+// Words are randomly generated from the applications global array 'words'.
+// Each word is altered to titlecase from default lowercase.
+build_password_string_titlecase :: proc(number_of_words: int = 3) -> string {
+	if number_of_words < 1 do return ""
+	sb := strings.builder_make(context.temp_allocator)
+	defer strings.builder_destroy(&sb)
+	for idx in 1 ..= number_of_words {
+		single_word: string = strings.to_pascal_case(rand.choice(words[:]),context.temp_allocator)
 		log.debugf("word '%d' of '%d' is: '%s'", idx, number_of_words, single_word)
 		strings.write_string(&sb, single_word)
 	}

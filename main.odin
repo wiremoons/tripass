@@ -11,17 +11,18 @@
 package tripass
 
 import "app_version"
+import "core:flags"
 import "core:fmt"
 import "core:log"
 import "core:mem"
-import "core:flags"
 import "core:os"
 
 main :: proc() {
-	
-	// set the context logger to output normal info or degug level info to the screen
-	context.logger = log.create_console_logger(log.Level.Info)
-	//context.logger = log.create_console_logger(log.Level.Debug)
+
+	// set the context logger to output to the screen - only if: odin build -debug ...
+	when ODIN_DEBUG {
+		context.logger = log.create_console_logger(log.Level.Debug) 
+	}
 	
 	// create a tracking allocator for memory used:
 	tracking_allocator: mem.Tracking_Allocator
@@ -31,14 +32,15 @@ main :: proc() {
 
 	// create each command line flag needed for the application using "core:flags"
 	Options :: struct {
-		n: int `usage:"Number of words included per suggested password. [default: 4]"`,
+		l:       bool `usage:"Provide lowercase passwords only. [default: titlecase]"`,
+		n:       int `usage:"Number of words included per suggested password. [default: 4]"`,
 		version: bool `usage:"Show the applications version."`,
-		v: bool `usage:"Show the applications version [short-form flag]."`,
-		debug: bool `args:"hidden" usage:"Display additional debug output."`,
+		v:       bool `usage:"Show the applications version [short-form flag]."`,
+		//debug:   bool `args:"hidden" usage:"Display additional debug output."`,
 		//varg: [dynamic]string `usage:"Extra arguments from the command line."`,
 	}
 	opt: Options
-	style : flags.Parsing_Style = .Unix
+	style: flags.Parsing_Style = .Unix
 
 	// Parse any command-line arguments
 	flags.parse_or_exit(&opt, os.args, style)
@@ -46,9 +48,6 @@ main :: proc() {
 	log.debugf("Running 'tripass' with DEBUG outputs...")
 	log.debugf("CLI flags: %#v", opt)
 
-	if opt.debug {
-		// TODO : set extra debug settings here
-	}
 
 	// set default number of words to include in each generated password
 	INCL_WORDS := 4
@@ -64,8 +63,12 @@ main :: proc() {
 		// default output for app below:
 		fmt.println("Running 'tripass'...")
 		help_output(INCL_WORDS)
-
-		new_password := build_password_string(INCL_WORDS)
+		new_password : string
+		if opt.l {
+			new_password = build_password_string_lowercase(INCL_WORDS)
+		} else {
+			new_password = build_password_string_titlecase(INCL_WORDS)
+		}
 		defer delete_string(new_password)
 		new_mark := select_mark(1)
 		defer delete_string(new_mark)
@@ -80,14 +83,15 @@ main :: proc() {
 
 	free_all(context.temp_allocator)
 
-	if opt.debug {
+	// output tracking allocator mem results to the screen - only if: odin build -debug ...
+	when ODIN_DEBUG {
 		// check using the tracking allocator if any memory was leaked?
-		fmt.println("\nDetected memory leaks are:")
+		log.debugf("Any detected memory leaks are below:")
 		for key, value in tracking_allocator.allocation_map {
-			log.errorf("%v : Leaked %v bytes [%v]\n", value.location, value.size, key)
+			log.debugf("%v : Leaked %v bytes [%v]\n", value.location, value.size, key)
 		}
 		for bad_free in tracking_allocator.bad_free_array {
-			fmt.printf("%v allocation %p was freed badly\n", bad_free.location, bad_free.memory)
+			log.debugf("%v allocation %p was freed badly\n", bad_free.location, bad_free.memory)
 		}
 	}
 	mem.tracking_allocator_clear(&tracking_allocator)
@@ -100,7 +104,7 @@ version_output :: proc() {
 	app_version.version_show()
 }
 
-help_output :: proc(INCL_WORDS:int) {
+help_output :: proc(INCL_WORDS: int) {
 	fmt.println("Total number of 'marks':", len(marks))
 	fmt.println("Total number of 'words':", len(words))
 	fmt.println("Number of 'words' per suggested password:", INCL_WORDS)
