@@ -17,11 +17,13 @@ MAX_MARKS :: len(marks) - 1
 
 // Each character (mark) is used as an additional random value to enhance 
 // the strength of the generated password. Total marks included: 10
+@rodata
 marks := [?]rune{'#', '.', ';', '@', '%', ':', '!', '>', '-', '<'}
 
 // Each string in the array contains a three letter english word used
 // to generate a password string. Total words included: 1311
 //odinfmt: disable
+@rodata
 words := [?]string{
     "aah", "aal", "aas", "aba", "abb", "abo", "abs", "aby", "ace", "ach", "act",
     "add", "ado", "ads", "adz", "aff", "aft", "aga", "age", "ago", "ags", "aha",
