@@ -1,3 +1,11 @@
+## version 0.9.0
+- Add command line options `-m` and `--monochrome` to ensure no colour outputs.
+- Include colour output by default if supported by the users terminal.
+- Add `-obfuscate-source-code-locations` to `build.sh` and `win-build.bat` to remove embedded file paths in final binary.
+- Ensure the offered passwords are all randomly generated.
+- Offer a total of nine passwords in three different formats per application execution.
+- Updated projects `README.md` and added screenshots.
+
 ## version 0.8.0
 - Add command line options `-i` and `--info`.
 - Add output to explain purpose of the application and display source password data summary.

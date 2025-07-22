@@ -16,6 +16,8 @@ import "core:fmt"
 import "core:log"
 import "core:mem"
 import "core:os"
+import "core:strings"
+import "core:terminal/ansi"
 
 main :: proc() {
 
@@ -32,12 +34,15 @@ main :: proc() {
 
 	// create each command line flag needed for the application using "core:flags"
 	Options :: struct {
-		info:    bool `usage:"Provide extended application information."`,
-		i:       bool `usage:"Provide extended application information [short-form flag]."`,
-		l:       bool `usage:"Provide lowercase passwords only. [default: titlecase]"`,
-		n:       int `usage:"Number of words included per suggested password. [default: 4]"`,
-		version: bool `usage:"Show the applications version."`,
-		v:       bool `usage:"Show the applications version [short-form flag]."`,
+		i:          bool `usage:"Provide extended application information [short-form flag]."`,
+		info:       bool `usage:"Provide extended application information."`,
+		l:          bool `usage:"Provide lowercase passwords only. [default: titlecase. short-form flag]"`,
+		lowercase:  bool `usage:"Provide lowercase passwords only. [default: titlecase]"`,
+		m:          bool `usage:"Disable colour formated output [short-form flag]."`,
+		monochrome: bool `usage:"Disable colour formated output."`,
+		n:          int `usage:"Number of words included per suggested password. [default: 4]"`,
+		version:    bool `usage:"Show the applications version."`,
+		v:          bool `usage:"Show the applications version [short-form flag]."`,
 		//debug:   bool `args:"hidden" usage:"Display additional debug output."`,
 		//varg: [dynamic]string `usage:"Extra arguments from the command line."`,
 	}
@@ -50,7 +55,6 @@ main :: proc() {
 	log.debugf("Running 'tripass' with DEBUG outputs...")
 	log.debugf("CLI flags: %#v", opt)
 
-
 	// set default number of words to include in each generated password
 	INCL_WORDS := 4
 	// Change default if user supplied a preference on the command line
@@ -58,62 +62,145 @@ main :: proc() {
 		INCL_WORDS = opt.n
 	}
 
-	// check if command line arg '--version' or '--v' was used
-	if opt.version || opt.v {
+	// check if colour output is supported (TERM), and if user wants to use it (NO_COLOR)
+	INCL_COLOUR := true // default
+	if !strings.contains(os.get_env("TERM", context.temp_allocator), "color") {INCL_COLOUR = false}
+	log.debugf("TERM: %v", strings.contains(os.get_env("TERM", context.temp_allocator), "color"))
+	if os.get_env("NO_COLOR", context.temp_allocator) != "" {INCL_COLOUR = false}
+	log.debugf("NO_COLOR: %v", os.get_env("NO_COLOR", context.temp_allocator) != "")
+	if opt.m || opt.monochrome {INCL_COLOUR = false}
+	log.debugf("Final colour output is: '%v'", INCL_COLOUR)
+
+	// execute program based on specific user command line options provided.
+	switch {
+	case opt.version || opt.v:
 		log.debugf("Outputting version information only...")
 		version_output()
-	} else if opt.info || opt.i {
-		log.debugf("Outputting version information only...")
+	case opt.info || opt.i:
+		log.debugf("Outputting application information only...")
 		version_output()
 		help_output(INCL_WORDS)
-	} else {
-		// default output for app below:
-
-		// generate two different password strings from 'words'
-		password_one: string
-		if opt.l {
-			password_one = build_password_string_lowercase(INCL_WORDS)
-		} else {
-			password_one = build_password_string_titlecase(INCL_WORDS)
-		}
-		defer delete_string(password_one)
-
-		password_short: string
-		if opt.l {
-			password_short = build_password_string_lowercase((INCL_WORDS / 2) + 1)
-		} else {
-			password_short = build_password_string_titlecase((INCL_WORDS / 2) + 1)
-		}
-		defer delete_string(password_short)
-
-		// generate two different random characters strings from 'marks'
-		new_mark_one := select_mark(1)
-		defer delete_string(new_mark_one)
-		new_mark_two := select_mark(1)
-		defer delete_string(new_mark_two)
-
-		// generate two random numbers
-		new_number_one := select_random_number()
-		defer delete_string(new_number_one)
-		new_number_two := select_random_number()
-		defer delete_string(new_number_two)
-
+	case:
+		log.debugf("Executing the application with default path...")
 		fmt.printfln("")
-		log.debugf("Long password: '%s'", password_one)
-		log.debugf("Short password: '%s'", password_short)
-		log.debugf("1st mark: '%v'", new_mark_one)
-		log.debugf("2nd mark: '%v'", new_mark_two)
-		log.debugf("1nd random number: '%s'", new_number_one)
-		log.debugf("2nd random number: '%s'", new_number_two)
+		for i in 1 ..= 3 {
+			log.debugf("Generating %d of 3 passwords offerings...", i)
+			// generate two different password strings from 'words'
+			password_one: string
+			if opt.l || opt.lowercase {
+				password_one = build_password_string_lowercase(INCL_WORDS)
+			} else {
+				password_one = build_password_string_titlecase(INCL_WORDS)
+			}
+			defer delete_string(password_one)
 
-		fmt.printf("%s      ", password_one)
-		fmt.printf("%s%v%s      ", password_one, new_mark_one, new_number_one)
-		fmt.printfln("%s%v%s%v%s", new_number_one, new_mark_one, password_short, new_mark_two, new_number_two)
-	}
+			password_two: string
+			if opt.l || opt.lowercase {
+				password_two = build_password_string_lowercase(INCL_WORDS)
+			} else {
+				password_two = build_password_string_titlecase(INCL_WORDS)
+			}
+			defer delete_string(password_two)
+
+			password_short: string
+			if opt.l || opt.lowercase {
+				password_short = build_password_string_lowercase((INCL_WORDS / 2) + 1)
+			} else {
+				password_short = build_password_string_titlecase((INCL_WORDS / 2) + 1)
+			}
+			defer delete_string(password_short)
+
+			// generate two different random characters strings from 'marks'
+			new_mark_one := select_mark(1)
+			defer delete_string(new_mark_one)
+			new_mark_two := select_mark(1)
+			defer delete_string(new_mark_two)
+
+			// generate two random numbers
+			new_number_one := select_random_number()
+			defer delete_string(new_number_one)
+			new_number_two := select_random_number()
+			defer delete_string(new_number_two)
+
+			log.debugf("Long password: '%s'", password_one)
+			log.debugf("Long password: '%s'", password_two)
+			log.debugf("Short password: '%s'", password_short)
+			log.debugf("1st mark: '%v'", new_mark_one)
+			log.debugf("2nd mark: '%v'", new_mark_two)
+			log.debugf("1nd random number: '%s'", new_number_one)
+			log.debugf("2nd random number: '%s'", new_number_two)
+
+			// output three unique randomly generated passwords for the user to choose from:
+			if INCL_COLOUR {
+				fmt.printf("%s      ", password_one)
+				fmt.printf(
+					"%s" +
+					ansi.CSI +
+					ansi.FG_GREEN +
+					ansi.SGR +
+					"%v" +
+					ansi.CSI +
+					ansi.RESET +
+					ansi.SGR +
+					ansi.CSI +
+					ansi.FG_BLUE +
+					ansi.SGR +
+					"%s      " +
+					ansi.CSI +
+					ansi.RESET +
+					ansi.SGR,
+					password_two,
+					new_mark_one,
+					new_number_one,
+				)
+				fmt.printfln(
+					ansi.CSI +
+					ansi.FG_BLUE +
+					ansi.SGR +
+					"%s" +
+					ansi.CSI +
+					ansi.RESET +
+					ansi.SGR +
+					ansi.CSI +
+					ansi.FG_GREEN +
+					ansi.SGR +
+					"%v" +
+					ansi.CSI +
+					ansi.RESET +
+					ansi.SGR +
+					"%s" +
+					ansi.CSI +
+					ansi.FG_GREEN +
+					ansi.SGR +
+					"%v" +
+					ansi.CSI +
+					ansi.RESET +
+					ansi.SGR +
+					ansi.CSI +
+					ansi.FG_BLUE +
+					ansi.SGR +
+					"%s" +
+					ansi.CSI +
+					ansi.RESET +
+					ansi.SGR,
+					new_number_one,
+					new_mark_one,
+					password_short,
+					new_mark_two,
+					new_number_two,
+				)
+			} else {
+				//no colour output required
+				fmt.printf("%s      ", password_one)
+				fmt.printf("%s%v%s      ", password_two, new_mark_one, new_number_one)
+				fmt.printfln("%s%v%s%v%s", new_number_one, new_mark_one, password_short, new_mark_two, new_number_two)
+			}
+		}
+	} // end switch
 
 	free_all(context.temp_allocator)
 
-	// output tracking allocator mem results to the screen - only if: odin build -debug ...
+	// output tracking allocator mem results to the screen only if built with: odin build -debug ...
 	when ODIN_DEBUG {
 		// check using the tracking allocator if any memory was leaked?
 		log.debugf("Any detected memory leaks are below:")
@@ -129,11 +216,12 @@ main :: proc() {
 	//free_all()
 }
 
-
+// Display the application version information using 'app_version' package (git sub-module)
 version_output :: proc() {
 	app_version.version_show()
 }
 
+// Display the additional information requested via cli args: -i  or  --info
 help_output :: proc(INCL_WORDS: int) {
 	fmt.println("")
 	fmt.println("This application is used to generate strong random passwords from a dictionary")
