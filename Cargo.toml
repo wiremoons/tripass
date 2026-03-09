@@ -1,0 +1,22 @@
+[package]
+name = "tripass"
+version = "0.1.0"
+edition = "2024"
+authors = ["Simon Rowe"]
+repository = "https://github.com/wiremoons/tripass"
+license = "MIT"
+description = "Generate passwords based on a dictionary of three letter words."
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[profile.release]
+strip = true    # Automatically strip symbols from the binary.
+opt-level = "z" # Optimize for size.
+lto = true      # Link time optimisations
+panic = "abort" # removes the need for extra unwinding code
+
+[dependencies]
+chrono = "0.4.44" # obtain date and time of build
+
+[build-dependencies]
+chrono = "0.4.44" # obtain date and time of build
