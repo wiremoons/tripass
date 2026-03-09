@@ -1,1 +1,5 @@
+# build file and compiled debug and/or release versions
 /target
+# binary file versions
+tripass
+tripass.exe
