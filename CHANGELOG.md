@@ -1,3 +1,10 @@
+## Version 0.2.0
+- Add dictionary of 1,311 unique three letter words.
+- Add dictionary of 10 unique marks.
+- Add tests to check / maintain dictionary integrity.
+- Add `README.md` as start of application docs.
+- Alter default work in progress output in execution.
+
 ## Version 0.1.1
 - Add `build.rs` to capture build version info.
 - Add `.gitignore` file.
