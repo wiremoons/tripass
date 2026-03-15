@@ -5,18 +5,11 @@
 //
 // File: main.rs
 
-mod triwords;
+// Local file modules below:
+mod passgen;
 mod version;
 
 fn main() {
     version::show();
-    println!(
-        "Number of unique three letter words: {}",
-        triwords::WORDS.len()
-    );
-    println!(
-        "Number of unique marks (ie symbols): {}",
-        triwords::MARKS.len()
-    );
-    
+    passgen::print_about();
 }

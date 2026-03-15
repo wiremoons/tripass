@@ -1,3 +1,10 @@
+## Version 0.3.0
+- Add additional comments to `version.rs` to explain build and usage.
+- Add new source code file `passgen.rs` and make `tripass.rs` a module of it.
+- Add output text to explain the applications purpose and usage.
+- Add new crate for coloured text output (ie `colored`).
+- Add new crate to manage command lines flags (ie `clap`).
+
 ## Version 0.2.0
 - Add dictionary of 1,311 unique three letter words.
 - Add dictionary of 10 unique marks.

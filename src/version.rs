@@ -8,8 +8,15 @@
 use std::path::Path;
 
 // NB: the output build date and time is dependant on the 'build.rs' included
-// with the project.
-
+// with the project, in-conjunction with this 'version.rs'. code. Additionally
+// the 'Cargo.toml' must include a build dependencies as follows:
+//   [build-dependencies]
+//   chrono = "0.4.44"       # obtain date and time of build
+//   rustc_version = "0.4.1" # obtains 'rustc' version used for build
+//
+// Other version output is automatically obtained from the projects 'Cargo.toml'
+// file fields.
+//
 // Example output:
 //
 // 'tripass' is version '0.1.3' built in 'Debug' mode.

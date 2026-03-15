@@ -1,6 +1,6 @@
 [package]
 name = "tripass"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2024"
 authors = ["Simon Rowe"]
 repository = "https://github.com/wiremoons/tripass"
@@ -11,12 +11,14 @@ description = "Generate passwords based on a dictionary of three letter words."
 
 [profile.release]
 strip = true    # Automatically strip symbols from the binary.
-opt-level = "z" # Optimize for size.
+opt-level = "z" # Optimise for size.
 lto = true      # Link time optimisations
 panic = "abort" # removes the need for extra unwinding code
 
 [dependencies]
-chrono = "0.4.44" # obtain date and time of build
+chrono = "0.4.44"                                   # obtain date and time of build
+colored = "3.1.1"                                   # coloured text output
+clap = { version = "4.6.0", features = ["derive"] } # cli options parsing
 
 [build-dependencies]
 chrono = "0.4.44"       # obtain date and time of build
