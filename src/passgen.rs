@@ -23,7 +23,7 @@ pub fn marks_total() -> usize {
 }
 
 // Return the name of the running executable
-fn application_name() -> String {
+pub fn application_name() -> String {
     let argzero = std::env::args()
         .nth(0)
         .expect("Application name not available from arg(0)");

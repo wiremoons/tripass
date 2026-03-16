@@ -1,3 +1,7 @@
+## Version 0.3.1
+- Implement initial command line flag option and parsing using 'Clap'.
+- Add `print_help()` function to support command line flags.
+
 ## Version 0.3.0
 - Add additional comments to `version.rs` to explain build and usage.
 - Add new source code file `passgen.rs` and make `tripass.rs` a module of it.
