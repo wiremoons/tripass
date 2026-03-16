@@ -7,7 +7,12 @@
 
 // Rust public crates:
 use colored::*;
+use heck::ToTitleCase;
+use rand::rng;
+use rand::seq::IndexedRandom;
 use std::path::Path;
+
+use crate::passgen::triwords::WORDS;
 
 // Local file modules below:
 mod triwords;
@@ -35,7 +40,43 @@ pub fn application_name() -> String {
         .into()
 }
 
-// Returns a block of formated text explaining the application
+// Returns a password string that includes the provided number of three letter
+// words all in lowercase.
+pub fn generate_lowercase_password(no_words: usize) -> String {
+    // Ensure no_words is viable - set to default '3' otherwise
+    let mut no_words = no_words;
+    if no_words < 1 || no_words > 99 {
+        no_words = 3
+    }
+
+    let mut r = rng();
+    let mut password_str = "".to_string();
+    for _ in 0..no_words {
+        password_str.push_str(WORDS.choose(&mut r).unwrap_or(&"err"));
+    }
+    password_str
+}
+
+// Returns a password string that includes the provided number of three letter
+// words all in titlecase.
+pub fn generate_titlecase_password(no_words: usize) -> String {
+    // Ensure requested no_words is viable - set to default '3' otherwise
+    let limit = if (1..=99).contains(&no_words) {
+        no_words
+    } else {
+        3
+    };
+
+    let mut r = rng();
+
+    // collect the required number of three letter words and ensure they are converted to
+    // titlecase before being appended to the password string and returned.
+    (0..limit)
+        .map(|_| WORDS.choose(&mut r).unwrap_or(&"err").to_title_case())
+        .collect::<String>()
+}
+
+// Returns a block of formatted text explaining the application
 pub fn print_about() {
     let about_text = format!(
         r#"
@@ -80,10 +121,10 @@ Optional environment variable settings:
 - Defines the number of random three letter words to include [default: 3] : TRIPASS_WORDS=3
 - Disable colour output if required : NO_COLOR=1
 "#,
-        bold_app_name = format!("{}", application_name()).bold(),
-        app_name = format!("{}", application_name()),
-        marks = format!("{}", marks_total()).bold(),
-        words = format!("{}", words_total()).bold()
+        bold_app_name = application_name().bold(),
+        app_name = application_name(),
+        marks = marks_total().to_string().bold(),
+        words = words_total().to_string().bold()
     );
     println!("{}", about_text)
 }

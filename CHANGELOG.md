@@ -1,3 +1,6 @@
+## Version 0.3.2
+- Add functions in `passgen.rs` to create passwords strings.
+
 ## Version 0.3.1
 - Implement initial command line flag option and parsing using 'Clap'.
 - Add `print_help()` function to support command line flags.

@@ -1,6 +1,6 @@
 [package]
 name = "tripass"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2024"
 authors = ["Simon Rowe"]
 repository = "https://github.com/wiremoons/tripass"
@@ -19,6 +19,8 @@ panic = "abort" # removes the need for extra unwinding code
 chrono = "0.4.44"                                   # obtain date and time of build
 colored = "3.1.1"                                   # coloured text output
 clap = { version = "4.6.0", features = ["derive"] } # cli options parsing
+rand = "0.10.0"
+heck = "0.5.0"
 
 [build-dependencies]
 chrono = "0.4.44"       # obtain date and time of build

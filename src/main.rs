@@ -80,5 +80,7 @@ fn main() -> ExitCode {
 
     // Default execution below:
     println!("Password is:");
+    println!("{}", passgen::generate_lowercase_password(4));
+    println!("{}", passgen::generate_titlecase_password(4));
     ExitCode::SUCCESS
 }
