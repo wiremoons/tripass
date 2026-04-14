@@ -15,7 +15,7 @@ pub static MARKS: &[&str] = &[
     "#", ".", ";", "@", "%", ":", "!", ">", "-", "<"
 ];
 
-// Each string in the array contains a three letter english word used
+// Each string in the array contains a three letter English word used
 // to generate a password string. Total words included: 1312
 #[rustfmt::skip]
 pub static WORDS: &[&str] = &[

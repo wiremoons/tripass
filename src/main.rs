@@ -55,6 +55,7 @@ defined as explained in the '-a / -about' command line flag output.
     );
 }
 
+// Program execution starts below:
 fn main() -> ExitCode {
     // obtain and command line flags via Clap
     let args = Args::parse();
@@ -80,7 +81,29 @@ fn main() -> ExitCode {
 
     // Default execution below:
     println!("Password is:");
-    println!("{}", passgen::generate_lowercase_password(4));
-    println!("{}", passgen::generate_titlecase_password(4));
+    // collect the random number and marks for use in output
+    let rand_num1 = passgen::generate_random_number();
+    let rand_num2 = passgen::generate_random_number();
+    let rand_mark1 = passgen::generate_random_mark();
+    let rand_mark2 = passgen::generate_random_mark();
+    // display generated passwords for the user to select from
+    // TODO: choose if want lowercase option from command line flag as titlecase is stronger by default
+    // TODO: loop to generate a few to select from - create new command line flag for user to override how many are shown
+    println!(
+        "{}{}{}{}{}",
+        rand_num1,
+        rand_mark1,
+        passgen::generate_lowercase_password(4),
+        rand_mark2,
+        rand_num2
+    );
+    println!(
+        "{}{}{}{}{}",
+        rand_num1,
+        rand_mark1,
+        passgen::generate_titlecase_password(4),
+        rand_mark2,
+        rand_num2
+    );
     ExitCode::SUCCESS
 }

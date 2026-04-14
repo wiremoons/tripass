@@ -1,3 +1,7 @@
+## Version 0.3.3
+- Add function in `passgen.rs` to create marks and random nummbers.
+- Add start of functionality in `main.rs` for showing generated passwords.
+
 ## Version 0.3.2
 - Add functions in `passgen.rs` to create passwords strings.
 
