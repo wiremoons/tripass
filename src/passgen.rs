@@ -88,7 +88,8 @@ pub fn generate_random_mark() -> String {
 pub fn generate_random_number() -> String {
     let mut r = rng();
     let num: u32 = r.random_range(0..100);
-    format!("{:02}", num.to_string().green())
+    // make sure the returned number is 2 digits (ie pad leading zero)
+    format!("{}", format!("{:02}", num).green())
 }
 
 // Returns a block of formatted text explaining the application
@@ -142,4 +143,32 @@ Optional environment variable settings:
         words = words_total().to_string().bold()
     );
     println!("{}", about_text)
+}
+
+// Run test to ensure the above functions work as expected:
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_random_number_padding() {
+        // Disable colours for this test session
+        colored::control::set_override(false);
+
+        for _ in 0..100 {
+            let result = generate_random_number();
+
+            // Now 'result' is just a plain String like "06" or "94"
+            // because we disabled the ANSI codes globally.
+            assert_eq!(
+                result.len(),
+                2,
+                "The generated string '{}' should be exactly 2 characters long",
+                result
+            );
+        }
+
+        // Optional: Reset it if you have other tests that NEED colour
+        colored::control::unset_override();
+    }
 }

@@ -1,3 +1,8 @@
+## Version 0.3.4
+- Update `generate_random_number()` to apply colouring and padding as was broken.
+- Add test to ensure random numbers are padded to two digits in `passgen.rs`.
+- Update `rand` crate to latest veriosn `0.10.1.`
+
 ## Version 0.3.3
 - Add function in `passgen.rs` to create marks and random nummbers.
 - Add start of functionality in `main.rs` for showing generated passwords.
