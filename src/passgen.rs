@@ -108,7 +108,7 @@ selected characters such as full stop, colon, dash, etc. The generated password
 also includes a randomly generated number between zero and ninety nine.
 
 To further increase the entropy of the generated password, the words from the
-dictionary can be capitalised (ie titlecase), or instead randomly include
+dictionary are capitalised (ie titlecase), or instead randomly include
 a mixture of upper and lower case characters.
 
 Passwords are generated using the following default settings:

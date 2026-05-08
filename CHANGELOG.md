@@ -1,3 +1,10 @@
+## Version 0.4.0
+- Add new command line option '-l / --loweronly' for additional choice in password output.
+- Add new command line option 'q / --quick' for single password output.
+- Improve code comments as documentation support for the application.
+- Add timezone to '-v / --version' output noting Rust issue: https://github.com/chronotope/chrono/issues/960 in `build.rs`.
+- Add additional 'TODO:' notes to aide development.
+
 ## Version 0.3.4
 - Update `generate_random_number()` to apply colouring and padding as was broken.
 - Add test to ensure random numbers are padded to two digits in `passgen.rs`.

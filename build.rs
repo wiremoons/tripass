@@ -13,7 +13,7 @@ use rustc_version::version;
 // BUILD TIMESTAMP
 // File generated is located in the Cargo build env: OUT_DIR
 // Filename created is: 'builddate.txt'
-// File contents example: '"Sun 23 Apr 2023 @ 10:08:18"'
+// File contents example: '"Sun 23 Apr 2023 @ 10:08:18 (UTC +01:00)"'
 //
 // RUSTC VERSION CAPTURE
 // File generated is located in the Cargo build env: OUT_DIR
@@ -44,10 +44,11 @@ fn main() {
 }
 
 // Obtain a date and time snapshot when building the application.
-// Format creates: "Sun 23 Apr 2023 @ 10:08:18"
+// NB: Rust issue: https://github.com/chronotope/chrono/issues/960
+// Format creates: "Sun 23 Apr 2023 @ 10:08:18 (UTC <offset_value>)"
 fn compile_date() -> String {
     let now: DateTime<Local> = Local::now();
-    now.format("\"%a %e %b %Y @ %T\"").to_string()
+    now.format("\"%a %e %b %Y @ %T (UTC %Z)\"").to_string()
 }
 
 // Obtain the rustc compiler version being used for the application build
